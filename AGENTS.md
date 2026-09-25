@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- The public proof gallery and demo admin share browser-local storage because the requested login is explicitly a local mock without a backend.
