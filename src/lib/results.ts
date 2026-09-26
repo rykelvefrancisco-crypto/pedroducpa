@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { getProofs, type ProofItem } from "@/lib/proofs.functions";
 
-export type ResultItem = { id: string; title: string; value: string; image?: string };
+export type ResultItem = ProofItem;
 
 export const DEFAULT_RESULTS: ResultItem[] = [
   { id: "1", title: "Comissão em uma semana", value: "R$ 12.840" },
@@ -13,34 +14,24 @@ export const DEFAULT_RESULTS: ResultItem[] = [
   { id: "8", title: "Novos depositantes", value: "94 FTDs" },
 ];
 
-const STORAGE_KEY = "pedro-cpa-results";
+export const STORAGE_KEY = "pedro-cpa-results";
 
-export function readResults(): ResultItem[] {
-  if (typeof window === "undefined") return DEFAULT_RESULTS;
+export function readLocalResults(): ResultItem[] | null {
+  if (typeof window === "undefined") return null;
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved ? (JSON.parse(saved) as ResultItem[]) : DEFAULT_RESULTS;
+    return saved ? (JSON.parse(saved) as ResultItem[]) : null;
   } catch {
-    return DEFAULT_RESULTS;
+    return null;
   }
 }
 
-export function saveResults(results: ResultItem[]) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(results));
-  window.dispatchEvent(new CustomEvent("pedro-cpa-results-updated"));
-}
+export const resultsQueryOptions = queryOptions({
+  queryKey: ["public-proofs"],
+  queryFn: () => getProofs(),
+  staleTime: 30_000,
+});
 
 export function useResults() {
-  const [results, setResults] = useState<ResultItem[]>(DEFAULT_RESULTS);
-  useEffect(() => {
-    const sync = () => setResults(readResults());
-    sync();
-    window.addEventListener("storage", sync);
-    window.addEventListener("pedro-cpa-results-updated", sync);
-    return () => {
-      window.removeEventListener("storage", sync);
-      window.removeEventListener("pedro-cpa-results-updated", sync);
-    };
-  }, []);
-  return results;
+  return useSuspenseQuery(resultsQueryOptions).data;
 }
