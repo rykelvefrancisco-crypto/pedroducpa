@@ -9,4 +9,4 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- The public proof gallery and demo admin share browser-local storage because the requested login is explicitly a local mock without a backend.
+- Store proof-gallery data and photos in Lovable Cloud so every visitor sees the same references; keep admin writes behind server-verified mock credentials.

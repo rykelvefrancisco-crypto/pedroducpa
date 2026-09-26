@@ -6,8 +6,10 @@ import { QualificationModal } from "@/components/qualification-modal";
 import { ResultsGallery } from "@/components/results-gallery";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
+import { resultsQueryOptions } from "@/lib/results";
 
 export const Route = createFileRoute("/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(resultsQueryOptions),
   head: () => ({ meta: [
     { title: "Pedro CPA — Método, Cooperação e Agenciamento" },
     { name: "description", content: "Atue com CPA por meio de indicações genuínas, cooperação com plataformas e estrutura para escalar como agente." },
@@ -17,7 +19,12 @@ export const Route = createFileRoute("/")({
     { name: "twitter:card", content: "summary_large_image" },
   ]}),
   component: Index,
+  errorComponent: ResultsError,
 });
+
+function ResultsError() {
+  return <div className="grid min-h-screen place-items-center bg-background px-4 text-center"><div><h1 className="font-display text-4xl uppercase text-foreground">Página temporariamente indisponível</h1><p className="mt-3 text-muted-foreground">Atualize a página em alguns instantes.</p></div></div>;
+}
 
 function Index() {
   const [modalOpen, setModalOpen] = useState(false);
