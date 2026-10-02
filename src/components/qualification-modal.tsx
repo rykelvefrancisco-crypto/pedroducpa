@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 type Props = { open: boolean; onClose: () => void };
-const experienceOptions = ["Sim, já faturo", "Conheço pouco", "Não, sou iniciante", "Sou agente e tenho interesse em falar com você"];
-const objectiveOptions = ["Começar do zero", "Aumentar meu faturamento atual", "Virar agente/cooperador"];
+const experienceOptions = ["Sim, já sou agente experiente", "Sim, sou agente iniciante"];
+const objectiveOptions = ["Me tornar um agente de elite"];
 
 export function QualificationModal({ open, onClose }: Props) {
   const [step, setStep] = useState(0);
