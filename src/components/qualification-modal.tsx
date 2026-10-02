@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 type Props = { open: boolean; onClose: () => void };
-const experienceOptions = ["Sim, já faturo", "Conheço pouco", "Não, sou iniciante", "Sou agente e tenho interesse em falar com você"];
-const objectiveOptions = ["Começar do zero", "Aumentar meu faturamento atual", "Virar agente/cooperador"];
+const experienceOptions = ["Sim, já sou agente experiente", "Sim, sou agente iniciante"];
+const objectiveOptions = ["Me tornar um agente de elite"];
 
 export function QualificationModal({ open, onClose }: Props) {
   const [step, setStep] = useState(0);
@@ -36,7 +36,7 @@ export function QualificationModal({ open, onClose }: Props) {
         <div className="min-h-[450px] p-6 pt-14 sm:p-10 sm:pt-14">
           <p className="font-mono text-xs uppercase text-primary">Etapa {step + 1} de 4</p>
           {step === 0 && <div className="animate-enter"><h2 className="mt-4 font-display text-4xl uppercase text-foreground">Qual é o seu nome?</h2><p className="mt-3 text-muted-foreground">Vamos começar pelo básico.</p><input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && canContinue && setStep(1)} placeholder="Digite seu primeiro nome" className="mt-10 w-full border-b border-border bg-transparent py-4 text-xl text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary" /></div>}
-          {step === 1 && <Question title="Você já tem experiência com CPA ou casas de apostas?" options={experienceOptions} value={experience} onChange={setExperience} />}
+          {step === 1 && <Question title="Você é agente?" options={experienceOptions} value={experience} onChange={setExperience} />}
           {step === 2 && <Question title="Qual seu objetivo atual?" options={objectiveOptions} value={objective} onChange={setObjective} />}
           {step === 3 && <div className="animate-enter text-center"><div className="mx-auto grid size-14 place-items-center rounded-full border border-primary bg-primary/10 text-primary"><Check className="size-7" /></div><h2 className="mt-6 font-display text-4xl uppercase text-foreground">Tudo pronto, {name.split(" ")[0]}.</h2><p className="mx-auto mt-4 max-w-sm text-muted-foreground">Suas respostas serão enviadas diretamente para o Pedro iniciar a conversa.</p><Button onClick={finish} className="mt-8 w-full animate-pulse-gold">Finalizar e falar com o Pedro <ExternalLink className="size-4" /></Button><a href="https://instagram.com/pedro_du_cpa" target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition hover:text-primary">Ou acesse @pedro_du_cpa <ExternalLink className="size-3.5" /></a></div>}
           {step < 3 && <div className="absolute inset-x-6 bottom-6 flex justify-between sm:inset-x-10 sm:bottom-10">{step > 0 ? <Button variant="ghost" onClick={() => setStep(step - 1)}><ArrowLeft className="size-4" /> Voltar</Button> : <span />}<Button disabled={!canContinue} onClick={() => setStep(step + 1)}>Continuar <ArrowRight className="size-4" /></Button></div>}
