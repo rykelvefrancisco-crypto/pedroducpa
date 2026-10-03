@@ -18,10 +18,7 @@ export function QualificationModal({ open, onClose }: Props) {
 
   if (!open) return null;
   const canContinue = name.trim().length > 1;
-  const finish = () => {
-    const text = `Olá, Pedro! Meu nome é ${name.trim()} e quero trabalhar contigo.`;
-    window.open(`https://wa.me/5519987266236?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
-  };
+  const whatsappUrl = `https://wa.me/5519987266236?text=${encodeURIComponent(`Olá, Pedro! Meu nome é ${name.trim()} e quero trabalhar contigo.`)}`;
 
   return (
     <div className="fixed inset-0 z-[100] grid place-items-end bg-overlay p-0 backdrop-blur-sm sm:place-items-center sm:p-6" role="dialog" aria-modal="true" aria-label="Qualificação para falar com Pedro">
