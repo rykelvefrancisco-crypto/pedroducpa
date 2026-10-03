@@ -1,6 +1,7 @@
 import { Check, ExternalLink, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type Props = { open: boolean; onClose: () => void };
 
